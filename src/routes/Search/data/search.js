@@ -10,7 +10,9 @@ const searchInitialState = {
 const searchSlice = createSlice({
   name: "search",
   initialState: searchInitialState,
-  reducers: {},
+  reducers: {
+    setSearchData: (store, { payload }) => console.log(payload),
+  },
 });
 
 export const { name, actions, reducer } = searchSlice;
