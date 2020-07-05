@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+import { shallowEqual, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -19,6 +20,11 @@ const Search = (props) => {
 
   const [textValue, setTextValue] = useState("");
   const [selectValue, setSelectValue] = useState("");
+
+  const { currentSearch, savedSearches } = useSelector(
+    (store) => store.search,
+    shallowEqual
+  );
 
   const onKeywordChange = ({ target: { value } }) => {
     if (value) {
@@ -84,7 +90,7 @@ const Search = (props) => {
               Search
             </Button>
           </form>
-          <SearchResults />
+          <SearchResults resultsList={currentSearch.data} />
         </Grid>
         <Grid item xs>
           Saved

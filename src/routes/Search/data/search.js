@@ -9,13 +9,16 @@ const searchInitialState = {
     },
   },
   savedSearches: {},
+  isLoading: false,
 };
 
 const searchSlice = createSlice({
   name: "search",
   initialState: searchInitialState,
   reducers: {
-    setSearchData: (state, { payload }) => console.log(payload),
+    setSearchData: (state, { payload }) => {
+      state.currentSearch.data = payload;
+    },
     saveSearchVariables: (state, { payload: { keyword, category } }) => {
       state.currentSearch.searchVariables = {
         keyword,
@@ -25,6 +28,9 @@ const searchSlice = createSlice({
     clearSearchVariables: (state) =>
       (state.currentSearch.searchVariables =
         searchInitialState.currentSearch.searchVariables),
+    setIsLoading: (state, { payload }) => {
+      state.isLoading = payload;
+    },
   },
 });
 
