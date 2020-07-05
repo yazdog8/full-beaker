@@ -8,7 +8,7 @@ const searchInitialState = {
       category: "",
     },
   },
-  savedSearches: {},
+  savedItems: [],
   isLoading: false,
 };
 
@@ -25,9 +25,9 @@ const searchSlice = createSlice({
         category,
       };
     },
-    clearSearchVariables: (state) =>
-      (state.currentSearch.searchVariables =
-        searchInitialState.currentSearch.searchVariables),
+    clearSearchVariables: (state) => {
+      state.currentSearch = searchInitialState.currentSearch;
+    },
     setIsLoading: (state, { payload }) => {
       state.isLoading = payload;
     },

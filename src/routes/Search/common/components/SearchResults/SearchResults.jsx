@@ -10,7 +10,13 @@ const SearchResults = ({ resultsList }) => {
         There are no search results to display.
       </Typography>
     );
-  return <div></div>;
+  return (
+    <ul>
+      {resultsList.map((result) => {
+        return <li key={`results_list_${result.id}`}>{result.downloads}</li>;
+      })}
+    </ul>
+  );
 };
 
 SearchResults.propTypes = {

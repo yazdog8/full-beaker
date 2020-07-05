@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { shallowEqual, useSelector } from "react-redux";
@@ -9,10 +9,12 @@ import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
+import ClearIcon from "@material-ui/icons/Clear";
 import GlobalAppTemplate from "common/components/templates/app/GlobalAppTemplate/GlobalAppTemplate";
 import { returnSearchData } from "routes/Search/data/searchThunks";
 import { SEARCH_CATEGORIES } from "routes/Search/data/searchConstants";
 import SearchResults from "routes/Search/common/components/SearchResults/SearchResults";
+import { actions } from "routes/Search/data/search";
 import styles from "./Search.module.scss";
 
 const Search = (props) => {
@@ -21,7 +23,7 @@ const Search = (props) => {
   const [textValue, setTextValue] = useState("");
   const [selectValue, setSelectValue] = useState("");
 
-  const { currentSearch, savedSearches } = useSelector(
+  const { currentSearch, savedItems } = useSelector(
     (store) => store.search,
     shallowEqual
   );
@@ -42,6 +44,12 @@ const Search = (props) => {
     dispatch(returnSearchData(textValue, selectValue));
   };
 
+  const clearSearch = () => {
+    setTextValue("");
+    setSelectValue("");
+    dispatch(actions.clearSearchVariables());
+  };
+
   const onClear = () => {
     setTextValue("");
     setSelectValue("");
@@ -51,6 +59,14 @@ const Search = (props) => {
     <GlobalAppTemplate>
       <Grid container spacing={2} alignItems="stretch" direction="row">
         <Grid item xs>
+          <Button
+            variant="outlined"
+            color="primary"
+            endIcon={<ClearIcon />}
+            onClick={clearSearch}
+          >
+            Reset Search
+          </Button>
           <form noValidate autoComplete="off">
             <TextField
               fullWidth
