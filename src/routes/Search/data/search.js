@@ -31,6 +31,12 @@ const searchSlice = createSlice({
     setIsLoading: (state, { payload }) => {
       state.isLoading = payload;
     },
+    setItemSaved: (state, { payload }) => {
+      state.currentSearch.data[payload].isSaved = true;
+    },
+    setSavedItem: (state, { payload }) => {
+      state.savedItems.push(payload);
+    },
   },
 });
 

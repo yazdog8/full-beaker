@@ -9,6 +9,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
 import ClearIcon from "@material-ui/icons/Clear";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import GlobalAppTemplate from "common/components/templates/app/GlobalAppTemplate/GlobalAppTemplate";
 import { returnSearchData } from "routes/Search/data/searchThunks";
 import { SEARCH_CATEGORIES } from "routes/Search/data/searchConstants";
@@ -16,13 +17,13 @@ import SearchResults from "routes/Search/common/components/SearchResults/SearchR
 import { actions } from "routes/Search/data/search";
 import styles from "./Search.module.scss";
 
-const Search = (props) => {
+const Search = () => {
   const dispatch = useDispatch();
 
   const [textValue, setTextValue] = useState("");
   const [selectValue, setSelectValue] = useState("");
 
-  const { currentSearch, savedItems } = useSelector(
+  const { currentSearch, savedItems, isLoading } = useSelector(
     (store) => store.search,
     shallowEqual
   );
@@ -51,9 +52,9 @@ const Search = (props) => {
     dispatch(actions.clearSearchVariables());
   };
 
-  const onClear = () => {
-    setTextValue("");
-    setSelectValue("");
+  const saveItem = (item, index) => {
+    dispatch(actions.setItemSaved(index));
+    dispatch(actions.setSavedItem({ id: item.id, pageURL: item.pageURL }));
   };
 
   return (
@@ -107,7 +108,14 @@ const Search = (props) => {
               Search
             </Button>
           </form>
-          <SearchResults resultsList={currentSearch.data} />
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <SearchResults
+              onSaveAction={saveItem}
+              resultsList={currentSearch.data}
+            />
+          )}
         </Grid>
         <Grid item xs>
           Saved

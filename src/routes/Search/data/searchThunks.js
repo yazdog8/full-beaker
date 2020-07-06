@@ -7,7 +7,8 @@ export function returnSearchData(keyword = "", category = "") {
     dispatch(actions.saveSearchVariables({ keyword, category }));
     await getSearchData(keyword, category)
       .then(({ hits }) => {
-        dispatch(actions.setSearchData(hits));
+        const data = hits.map((hit) => ({ ...hit, isSaved: false }));
+        dispatch(actions.setSearchData(data));
       })
       .finally(() => dispatch(actions.setIsLoading(false)));
   };
