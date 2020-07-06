@@ -28,6 +28,9 @@ const searchSlice = createSlice({
     clearSearchVariables: (state) => {
       state.currentSearch = searchInitialState.currentSearch;
     },
+    clearSavedItems: (state) => {
+      state.savedItems = [];
+    },
     setIsLoading: (state, { payload }) => {
       state.isLoading = payload;
     },

@@ -2,18 +2,14 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { shallowEqual, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
 import ClearIcon from "@material-ui/icons/Clear";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import GlobalAppTemplate from "common/components/templates/app/GlobalAppTemplate/GlobalAppTemplate";
 import { returnSearchData } from "routes/Search/data/searchThunks";
-import { SEARCH_CATEGORIES } from "routes/Search/data/searchConstants";
+import SearchForm from "routes/Search/common/components/SearchForm/SearchForm";
 import SearchResults from "routes/Search/common/components/SearchResults/SearchResults";
+import SavedItems from "routes/Search/common/components/SavedItems/SavedItems";
 import { actions } from "routes/Search/data/search";
 import styles from "./Search.module.scss";
 
@@ -52,6 +48,8 @@ const Search = () => {
     dispatch(actions.clearSearchVariables());
   };
 
+  const clearSavedItems = () => dispatch(actions.clearSavedItems());
+
   const saveItem = (item, index) => {
     dispatch(actions.setItemSaved(index));
     dispatch(actions.setSavedItem({ id: item.id, pageURL: item.pageURL }));
@@ -69,45 +67,13 @@ const Search = () => {
           >
             Reset Search
           </Button>
-          <form noValidate autoComplete="off">
-            <TextField
-              fullWidth
-              label="Keyword"
-              variant="outlined"
-              value={textValue}
-              onChange={onKeywordChange}
-            />
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel id="demo-simple-select-outlined-label">
-                Category
-              </InputLabel>
-              <Select
-                variant="outlined"
-                fullWidth
-                labelId="demo-simple-select-outlined-label"
-                value={selectValue}
-                onChange={onSelectChange}
-                label="Category"
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {SEARCH_CATEGORIES.map((category) => (
-                  <MenuItem key={`search_select_${category}`} value={category}>
-                    {category}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Button
-              color="primary"
-              variant="contained"
-              fullWidth
-              onClick={onSearchClick}
-            >
-              Search
-            </Button>
-          </form>
+          <SearchForm
+            submitAction={onSearchClick}
+            textValue={textValue}
+            textChangeAction={onKeywordChange}
+            selectAction={onSelectChange}
+            selectValue={selectValue}
+          />
           {isLoading ? (
             <CircularProgress />
           ) : (
@@ -119,6 +85,17 @@ const Search = () => {
         </Grid>
         <Grid item xs>
           Saved
+          {savedItems.length > 0 && (
+            <Button
+              variant="outlined"
+              color="primary"
+              endIcon={<ClearIcon />}
+              onClick={clearSavedItems}
+            >
+              Clear Saved Items
+            </Button>
+          )}
+          <SavedItems data={savedItems} />
         </Grid>
       </Grid>
     </GlobalAppTemplate>
