@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import { shallowEqual, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -41,7 +40,9 @@ const Search = (props) => {
   };
 
   const onSearchClick = () => {
-    dispatch(returnSearchData(textValue, selectValue));
+    const keyWord = textValue.trim();
+    setTextValue(keyWord);
+    dispatch(returnSearchData(keyWord, selectValue));
   };
 
   const clearSearch = () => {
@@ -115,8 +116,5 @@ const Search = (props) => {
     </GlobalAppTemplate>
   );
 };
-
-Search.propTypes = {};
-Search.defaultProps = {};
 
 export default Search;
