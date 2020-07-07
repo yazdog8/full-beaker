@@ -58,7 +58,7 @@ const Search = () => {
               endIcon={<ClearIcon />}
               onClick={clearSearch}
             >
-              Reset Search
+              Clear Search
             </Button>
           )}
           <SearchForm
@@ -88,7 +88,7 @@ const Search = () => {
               endIcon={<ClearIcon />}
               onClick={clearSavedItems}
             >
-              Clear Saved Items
+              Clear Saved
             </Button>
           )}
           <SavedItems data={savedItems} />

@@ -29,6 +29,9 @@ const searchSlice = createSlice({
       state.currentSearch = searchInitialState.currentSearch;
     },
     clearSavedItems: (state) => {
+      state.currentSearch.data.map((item) => {
+        if (item.isSaved) item.isSaved = false;
+      });
       state.savedItems = [];
     },
     setIsLoading: (state, { payload }) => {
