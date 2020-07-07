@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import ClearIcon from "@material-ui/icons/Clear";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Typography from "@material-ui/core/Typography";
 import GlobalAppTemplate from "common/components/templates/app/GlobalAppTemplate/GlobalAppTemplate";
 import { returnSearchData } from "routes/Search/data/searchThunks";
 import SearchForm from "routes/Search/common/components/SearchForm/SearchForm";
@@ -51,16 +52,25 @@ const Search = () => {
     <GlobalAppTemplate>
       <Grid container spacing={2} alignItems="stretch" direction="row">
         <Grid item xs>
-          {currentSearch.data.length > 0 && (
-            <Button
-              variant="outlined"
-              color="primary"
-              endIcon={<ClearIcon />}
-              onClick={clearSearch}
-            >
-              Clear Search
-            </Button>
-          )}
+          <Grid container item xs>
+            <Grid item xs>
+              <Typography variant="h4" gutterBottom>
+                Search
+              </Typography>
+            </Grid>
+            <Grid item xs className={styles["search-clear"]}>
+              {currentSearch.data.length > 0 && (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  endIcon={<ClearIcon />}
+                  onClick={clearSearch}
+                >
+                  Clear
+                </Button>
+              )}
+            </Grid>
+          </Grid>
           <SearchForm
             submitAction={onSearchClick}
             textValue={textValue}
@@ -80,17 +90,25 @@ const Search = () => {
           )}
         </Grid>
         <Grid item xs>
-          Saved
-          {savedItems.length > 0 && (
-            <Button
-              variant="outlined"
-              color="primary"
-              endIcon={<ClearIcon />}
-              onClick={clearSavedItems}
-            >
-              Clear Saved
-            </Button>
-          )}
+          <Grid container item xs>
+            <Grid item xs>
+              <Typography variant="h4" gutterBottom>
+                Saved
+              </Typography>
+            </Grid>
+            <Grid item xs className={styles["search-clear"]}>
+              {savedItems.length > 0 && (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  endIcon={<ClearIcon />}
+                  onClick={clearSavedItems}
+                >
+                  Clear
+                </Button>
+              )}
+            </Grid>
+          </Grid>
           <SavedItems data={savedItems} />
         </Grid>
       </Grid>
