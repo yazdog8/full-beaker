@@ -24,17 +24,11 @@ const Search = () => {
     shallowEqual
   );
 
-  const onKeywordChange = ({ target: { value } }) => {
-    if (value) {
-      setTextValue(value);
-    }
-  };
+  const onKeywordChange = ({ target: { value } }) => setTextValue(value);
 
-  const onSelectChange = ({ target: { value } }) => {
-    if (value) {
-      setSelectValue(value);
-    }
-  };
+  const onSelectChange = ({ target: { value } }) => setSelectValue(value);
+
+  const clearSavedItems = () => dispatch(actions.clearSavedItems());
 
   const onSearchClick = () => {
     const keyWord = textValue.trim();
@@ -48,8 +42,6 @@ const Search = () => {
     dispatch(actions.clearSearchVariables());
   };
 
-  const clearSavedItems = () => dispatch(actions.clearSavedItems());
-
   const saveItem = (item, index) => {
     dispatch(actions.setItemSaved(index));
     dispatch(actions.setSavedItem({ id: item.id, pageURL: item.pageURL }));
@@ -59,14 +51,16 @@ const Search = () => {
     <GlobalAppTemplate>
       <Grid container spacing={2} alignItems="stretch" direction="row">
         <Grid item xs>
-          <Button
-            variant="outlined"
-            color="primary"
-            endIcon={<ClearIcon />}
-            onClick={clearSearch}
-          >
-            Reset Search
-          </Button>
+          {currentSearch.data.length > 0 && (
+            <Button
+              variant="outlined"
+              color="primary"
+              endIcon={<ClearIcon />}
+              onClick={clearSearch}
+            >
+              Reset Search
+            </Button>
+          )}
           <SearchForm
             submitAction={onSearchClick}
             textValue={textValue}
@@ -75,7 +69,9 @@ const Search = () => {
             selectValue={selectValue}
           />
           {isLoading ? (
-            <CircularProgress />
+            <div className={styles["search-loading"]}>
+              <CircularProgress />
+            </div>
           ) : (
             <SearchResults
               onSaveAction={saveItem}

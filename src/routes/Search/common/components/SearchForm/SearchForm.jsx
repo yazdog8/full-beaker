@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { SEARCH_CATEGORIES } from "routes/Search/data/searchConstants";
 import Button from "@material-ui/core/Button";
+import styles from "./SearchForm.module.scss";
 
 const SearchForm = ({
   submitAction,
@@ -16,34 +17,44 @@ const SearchForm = ({
   selectValue,
 }) => {
   return (
-    <form noValidate autoComplete="off">
-      <TextField
-        fullWidth
-        label="Keyword"
-        variant="outlined"
-        value={textValue}
-        onChange={textChangeAction}
-      />
-      <FormControl variant="outlined" fullWidth>
-        <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
-        <Select
+    <form noValidate autoComplete="off" className={styles["search-form"]}>
+      <div className={styles["search-form-control"]}>
+        <TextField
+          fullWidth
+          label="Keyword"
+          variant="outlined"
+          value={textValue}
+          onChange={textChangeAction}
+        />
+      </div>
+      <div className={styles["search-form-control"]}>
+        <FormControl
           variant="outlined"
           fullWidth
-          labelId="demo-simple-select-outlined-label"
-          value={selectValue}
-          onChange={selectAction}
-          label="Category"
+          className={styles["search-form-control"]}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {SEARCH_CATEGORIES.map((category) => (
-            <MenuItem key={`search_select_${category}`} value={category}>
-              {category}
+          <InputLabel id="demo-simple-select-outlined-label">
+            Category
+          </InputLabel>
+          <Select
+            variant="outlined"
+            fullWidth
+            labelId="demo-simple-select-outlined-label"
+            value={selectValue}
+            onChange={selectAction}
+            label="Category"
+          >
+            <MenuItem value="">
+              <em>None</em>
             </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+            {SEARCH_CATEGORIES.map((category) => (
+              <MenuItem key={`search_select_${category}`} value={category}>
+                {category}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
       <Button
         color="primary"
         variant="contained"
