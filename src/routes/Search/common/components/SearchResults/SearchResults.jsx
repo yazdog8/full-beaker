@@ -1,9 +1,9 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Chip from "@material-ui/core/Chip";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
@@ -58,16 +58,31 @@ const SearchResults = ({ resultsList, onSaveAction }) => {
             </div>
             <div className={styles["search-card-details"]}>
               {tags(result.tags)}
-              <div>
-                <div>
-                  {result.likes}
-                  <ThumbUpIcon fontSize="small" />
-                </div>
-                <div>
-                  {result.favorites}
-                  <StarIcon fontSize="small" />
-                </div>
-              </div>
+
+              <Grid
+                container
+                spacing={2}
+                className={styles["search-card-details-popularity"]}
+              >
+                <Grid item xs={3}>
+                  <Typography variant="body1">
+                    {result.likes}&nbsp;
+                    <ThumbUpIcon
+                      fontSize="small"
+                      className={styles["search-card-details-icon"]}
+                    />
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1">
+                    {result.favorites}&nbsp;
+                    <StarIcon
+                      fontSize="small"
+                      className={styles["search-card-details-icon"]}
+                    />
+                  </Typography>
+                </Grid>
+              </Grid>
             </div>
           </Card>
         );

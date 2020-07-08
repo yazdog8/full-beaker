@@ -4,7 +4,17 @@
 
   &-details {
     flex-grow: 1;
-    padding: 15px;
+    padding: 15px 15px 35px 15px;
+    position: relative;
+
+    &-popularity {
+      bottom: 5px;
+      position: absolute;
+    }
+
+    &-icon {
+      vertical-align: top;
+    }
   }
 
   &-media {
