@@ -34,7 +34,7 @@ const Search = () => {
   const onSearchClick = () => {
     const keyWord = textValue.trim();
     setTextValue(keyWord);
-    dispatch(returnSearchData(keyWord, selectValue));
+    dispatch(returnSearchData(keyWord.toLowerCase(), selectValue));
   };
 
   const clearSearch = () => {
